@@ -20,9 +20,11 @@ namespace api.Controllers
         public IEnumerable<Product> Get() => new List<Product>();
 
         [HttpGet]
+        [Route("[controller]/[action]")]
         public IEnumerable<string> Categories() => new List<string>();
 
         [HttpGet]
+        [Route("[controller]/{category}")]
         public IEnumerable<Product> Get(string category) => new List<Product>();
     }
 }
