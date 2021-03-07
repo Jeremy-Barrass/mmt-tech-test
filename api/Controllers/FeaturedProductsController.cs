@@ -26,7 +26,8 @@ namespace api.Controllers
 
         [HttpGet]
         [Route("[controller]/[action]")]
-        public IEnumerable<string> Categories() => new List<string>();
+        public IEnumerable<string> Categories() => 
+            _db.Categories.ToList();
 
         [HttpGet]
         [Route("[controller]/{category}")]
