@@ -34,6 +34,8 @@ namespace api.Controllers
         [Route("[controller]/{category?}")]
         public IEnumerable<Product> Get(string category = null)
         {
+            if (category is null) return _db.Products.ToList();
+            
             var value = _db.Categories.Where(c => c.Name == category).FirstOrDefault().Id;
             return _db.Products.Where(p => p.Category == value).ToList();
         }
