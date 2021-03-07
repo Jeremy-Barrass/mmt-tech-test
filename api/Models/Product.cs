@@ -1,5 +1,3 @@
-using api.Enums;
-
 namespace api.Models
 {
     public class Product

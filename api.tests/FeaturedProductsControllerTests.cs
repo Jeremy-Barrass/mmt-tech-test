@@ -53,22 +53,27 @@ namespace api.tests
         List<Category> fakeCategoryData = new List<Category>{
             new Category
             {
+                Id = 1,
                 Name = "TestCat1"
             },
             new Category
             {
+                Id = 2,
                 Name = "TestCat2"
             },
             new Category
             {
+                Id = 3,
                 Name = "TestCat3"
             },
             new Category
             {
+                Id = 4,
                 Name = "TestCat4"
             },
             new Category
             {
+                Id = 5,
                 Name = "TestCat5"
             }
         };
@@ -122,6 +127,9 @@ namespace api.tests
             //Arrange
             var mockProductSetObject = MockDbSetSetup(mockProductSet, fakeProductData);
             mockDb.Setup(db => db.Products).Returns(mockProductSetObject);
+
+            var mockCategorySetObject = MockDbSetSetup(mockCategorySet, fakeCategoryData);
+            mockDb.Setup(db => db.Categories).Returns(mockCategorySetObject);
 
             var controller = new FeaturedProductsController(mockDb.Object, mockLogger.Object);
                         

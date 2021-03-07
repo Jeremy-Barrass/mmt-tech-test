@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using api.DbConnection;
 using api.Models;
-using api.Enums;
 
 namespace api.Controllers
 {
@@ -34,8 +33,8 @@ namespace api.Controllers
         [Route("[controller]/{category}")]
         public IEnumerable<Product> Get(string category)
         {
-            var catValue = Enum.Parse<ProdCategory>(category);
-            return _db.Products.Where(p => p.Category == catValue);
+            var value = _db.Categories.Where(c => c.Name == category).FirstOrDefault().Id;
+            return _db.Products.Where(p => p.Category == value).ToList();
         }
     }
 }
