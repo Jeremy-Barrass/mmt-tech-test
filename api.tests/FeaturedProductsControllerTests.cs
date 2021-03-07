@@ -70,6 +70,8 @@ namespace api.tests
             
             //Assert
             Assert.NotEmpty(result);
+            // Featured products have SKU < 40000
+            Assert.Empty(result.ToList().FindAll(p => p.Sku > 30000));
         }
     }
 }
