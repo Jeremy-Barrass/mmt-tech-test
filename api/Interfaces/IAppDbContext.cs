@@ -6,5 +6,6 @@ namespace api.Interfaces
     public interface IAppDbContext
     {
         DbSet<Product> Products { get; set; }
+        DbSet<string> Categories { get; set; }
     }
 }

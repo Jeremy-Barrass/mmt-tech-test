@@ -17,8 +17,9 @@ namespace api.tests
     {
         Mock<ILogger<FeaturedProductsController>> mockLogger = new Mock<ILogger<FeaturedProductsController>>();
         Mock<IAppDbContext> mockDb = new Mock<IAppDbContext>();
-        Mock<DbSet<Product>> mockSet = new Mock<DbSet<Product>>();
-        List<Product> fakeData = new List<Product>{
+        Mock<DbSet<Product>> mockProductSet = new Mock<DbSet<Product>>();
+        Mock<DbSet<string>> mockCategorySet = new Mock<DbSet<string>>();
+        List<Product> fakeProductData = new List<Product>{
             new Product
             {
                 Name = "TestProd1",
@@ -45,6 +46,13 @@ namespace api.tests
                 Sku = 50000
             },
         };
+        List<string> fakeCategoryData = new List<string>{
+            "TestCat1",
+            "TestCat2",
+            "TestCat3",
+            "TestCat4",
+            "TestCat5"
+        };
 
         private DbSet<T> MockDbSetSetup<T>(Mock<DbSet<T>> set, List<T> list) where T : class
         {
@@ -60,7 +68,7 @@ namespace api.tests
         public void Get_WhenCalled_ItReturnsAListOfFeaturedProducts()
         {
             //Arrange
-            var mockSetObject = MockDbSetSetup(mockSet, fakeData);
+            var mockSetObject = MockDbSetSetup(mockProductSet, fakeProductData);
             mockDb.Setup(db => db.Products).Returns(mockSetObject);
 
             var controller = new FeaturedProductsController(mockDb.Object, mockLogger.Object);
@@ -72,6 +80,22 @@ namespace api.tests
             Assert.NotEmpty(result);
             // Featured products have SKU < 40000
             Assert.Empty(result.ToList().FindAll(p => p.Sku > 30000));
+        }
+
+        [Fact]
+        public void Categories_WhenCalled_ItReturnsAListOfCategories()
+        {
+            //Arrange
+            var mockSetObject = MockDbSetSetup(mockCategorySet, fakeCategoryData);
+            mockDb.Setup(db => db.Categories).Returns(mockSetObject);
+
+            var controller = new FeaturedProductsController(mockDb.Object, mockLogger.Object);
+
+            //Act
+            var result = controller.Categories();
+            
+            //Assert
+            Assert.NotEmpty(result);
         }
     }
 }
