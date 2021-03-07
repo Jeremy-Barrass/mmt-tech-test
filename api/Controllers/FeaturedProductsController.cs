@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using api.Interfaces;
 using api.Models;
 
 namespace api.Controllers
@@ -10,14 +12,16 @@ namespace api.Controllers
     public class FeaturedProductsController : ControllerBase
     {
         private readonly ILogger<FeaturedProductsController> _logger;
+        private readonly IAppDbContext _db;
 
-        public FeaturedProductsController(ILogger<FeaturedProductsController> logger)
+        public FeaturedProductsController(IAppDbContext db, ILogger<FeaturedProductsController> logger)
         {
             _logger = logger;
+            _db = db;
         }
 
         [HttpGet]
-        public IEnumerable<Product> Get() => new List<Product>();
+        public IEnumerable<Product> Get() => _db.Products.ToList();
 
         [HttpGet]
         [Route("[controller]/[action]")]

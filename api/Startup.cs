@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
 using api.DbConnection;
 
 namespace api
@@ -20,6 +21,13 @@ namespace api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContextPool<AppDbContext>(
+                DbContextOptions => DbContextOptions.UseMySql(
+                    Configuration.GetValue<string>("ConnectionStrings:FeaturedProducts:Db"),
+                    ServerVersion.FromString("8.0.23=mysql"),
+                    mySqlOptions => {})
+                    .EnableDetailedErrors()
+            );
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -27,7 +35,6 @@ namespace api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
             });
 
-            services.AddTransient<AppDb>(_ => new AppDb(Configuration.GetValue<string>("ConnectionStrings:FeaturedProducts:Db")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
