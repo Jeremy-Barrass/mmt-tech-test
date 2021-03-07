@@ -31,6 +31,7 @@ namespace api.Controllers
 
         [HttpGet]
         [Route("[controller]/{category}")]
-        public IEnumerable<Product> Get(string category) => new List<Product>();
+        public IEnumerable<Product> Get(string category) => 
+            _db.Products.Where(p => p.Category == category);
     }
 }
