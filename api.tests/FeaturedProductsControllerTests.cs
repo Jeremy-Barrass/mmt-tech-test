@@ -23,27 +23,32 @@ namespace api.tests
             new Product
             {
                 Name = "TestProd1",
-                Sku = 10000
+                Sku = 10000,
+                Category = "TestCat1"
             },
             new Product
             {
                 Name = "TestProd2",
-                Sku = 20000
+                Sku = 20000,
+                Category = "TestCat2"
             },
             new Product
             {
                 Name = "TestProd3",
-                Sku = 30000
+                Sku = 30000,
+                Category = "TestCat3"
             },
             new Product
             {
                 Name = "TestProd4",
-                Sku = 40000
+                Sku = 40000,
+                Category = "TestCat4"
             },
             new Product
             {
                 Name = "TestProd5",
-                Sku = 50000
+                Sku = 50000,
+                Category = "TestCat5"
             },
         };
         List<string> fakeCategoryData = new List<string>{
@@ -96,6 +101,26 @@ namespace api.tests
             
             //Assert
             Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void GetWithCategoryParam_WhenCalled_ItReturnsTheProductsWithThatCategory()
+        {
+            //Arrange
+            var mockProductSetObject = MockDbSetSetup(mockProductSet, fakeProductData);
+            mockDb.Setup(db => db.Products).Returns(mockProductSetObject);
+
+            // var mockCategorySetObject = MockDbSetSetup(mockCategorySet, fakeCategoryData);
+            // mockDb.Setup(db => db.Categories).Returns(mockCategorySetObject);
+
+            var controller = new FeaturedProductsController(mockDb.Object, mockLogger.Object);
+                        
+            //Act
+            var result = controller.Get("TestCat3");
+            
+            //Assert
+            Assert.NotEmpty(result);
+            Assert.Equal(fakeProductData[2].Name, result.Where(p => p.Name == "TestProd3").FirstOrDefault().Name);
         }
     }
 }
