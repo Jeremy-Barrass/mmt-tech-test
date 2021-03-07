@@ -110,9 +110,6 @@ namespace api.tests
             var mockProductSetObject = MockDbSetSetup(mockProductSet, fakeProductData);
             mockDb.Setup(db => db.Products).Returns(mockProductSetObject);
 
-            // var mockCategorySetObject = MockDbSetSetup(mockCategorySet, fakeCategoryData);
-            // mockDb.Setup(db => db.Categories).Returns(mockCategorySetObject);
-
             var controller = new FeaturedProductsController(mockDb.Object, mockLogger.Object);
                         
             //Act
