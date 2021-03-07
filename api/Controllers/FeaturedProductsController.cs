@@ -21,7 +21,8 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Product> Get() => _db.Products.ToList();
+        public IEnumerable<Product> Get() =>
+            _db.Products.Where(p => p.Sku < 40000).ToList();
 
         [HttpGet]
         [Route("[controller]/[action]")]
