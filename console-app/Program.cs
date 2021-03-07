@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 
 namespace console_app
@@ -9,11 +10,20 @@ namespace console_app
 
         static void Main(string[] args)
         {
-            // Console.WriteLine("Hello World!");
+            var result1 = client.GetAsync("https://localhost:5001/Products").Result;
+            var result2 = client.GetAsync("https://localhost:5001/Products/Featured").Result;
+            var result3 = client.GetAsync("https://localhost:5001/Products/Electronics").Result;
 
-            var result = client.GetAsync("https://localhost:5001/Products").Result;
+            var resultList = new List<HttpResponseMessage>{
+                result1,
+                result2,
+                result3
+            };
 
-            Console.Write(result);
+            foreach (var result in resultList)
+            {
+                Console.Write(result.Content.ToString() + "\n");
+            }
         }
     }
 }
