@@ -1,12 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using api.Interfaces;
 using api.Models;
 
 namespace api.DbConnection
 {
-    public class AppDbContext : DbContext, IAppDbContext
+    public class AppDbContext : DbContext
     {
-        public DbSet<Product> Products { get; set; }
-        public DbSet<string> Categories { get; set; }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
     }
 }

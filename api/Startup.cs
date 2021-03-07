@@ -23,9 +23,11 @@ namespace api
         {
             services.AddDbContextPool<AppDbContext>(
                 DbContextOptions => DbContextOptions.UseMySql(
-                    Configuration.GetValue<string>("ConnectionStrings:FeaturedProducts:Db"),
+                    Configuration["Db:ConnectionString"],
                     ServerVersion.FromString("8.0.23=mysql"),
-                    mySqlOptions => {})
+                    mySqlOptions => {
+                        
+                    })
                     .EnableDetailedErrors()
             );
 

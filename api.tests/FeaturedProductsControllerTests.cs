@@ -8,7 +8,6 @@ using Xunit;
 using Moq;
 using api.Controllers;
 using api.DbConnection;
-using api.Interfaces;
 using api.Models;
 
 namespace api.tests
@@ -16,9 +15,9 @@ namespace api.tests
     public class FeaturedProductsControllerTests
     {
         Mock<ILogger<FeaturedProductsController>> mockLogger = new Mock<ILogger<FeaturedProductsController>>();
-        Mock<IAppDbContext> mockDb = new Mock<IAppDbContext>();
+        Mock<AppDbContext> mockDb = new Mock<AppDbContext>(new DbContextOptionsBuilder<AppDbContext>().Options);
         Mock<DbSet<Product>> mockProductSet = new Mock<DbSet<Product>>();
-        Mock<DbSet<string>> mockCategorySet = new Mock<DbSet<string>>();
+        Mock<DbSet<Category>> mockCategorySet = new Mock<DbSet<Category>>();
         List<Product> fakeProductData = new List<Product>{
             new Product
             {
@@ -51,12 +50,27 @@ namespace api.tests
                 Category = "TestCat5"
             },
         };
-        List<string> fakeCategoryData = new List<string>{
-            "TestCat1",
-            "TestCat2",
-            "TestCat3",
-            "TestCat4",
-            "TestCat5"
+        List<Category> fakeCategoryData = new List<Category>{
+            new Category
+            {
+                Name = "TestCat1"
+            },
+            new Category
+            {
+                Name = "TestCat2"
+            },
+            new Category
+            {
+                Name = "TestCat3"
+            },
+            new Category
+            {
+                Name = "TestCat4"
+            },
+            new Category
+            {
+                Name = "TestCat5"
+            }
         };
 
         private DbSet<T> MockDbSetSetup<T>(Mock<DbSet<T>> set, List<T> list) where T : class
@@ -77,7 +91,7 @@ namespace api.tests
             mockDb.Setup(db => db.Products).Returns(mockSetObject);
 
             var controller = new FeaturedProductsController(mockDb.Object, mockLogger.Object);
-            
+
             //Act
             var result = controller.Get();
             
@@ -90,7 +104,6 @@ namespace api.tests
         [Fact]
         public void Categories_WhenCalled_ItReturnsAListOfCategories()
         {
-            //Arrange
             var mockSetObject = MockDbSetSetup(mockCategorySet, fakeCategoryData);
             mockDb.Setup(db => db.Categories).Returns(mockSetObject);
 
