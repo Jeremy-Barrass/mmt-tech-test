@@ -10,9 +10,9 @@ using api.Models;
 
 namespace api.tests
 {
-    public class FeaturedProductsControllerTests
+    public class ProductsControllerTests
     {
-        Mock<ILogger<FeaturedProductsController>> mockLogger = new Mock<ILogger<FeaturedProductsController>>();
+        Mock<ILogger<ProductsController>> mockLogger = new Mock<ILogger<ProductsController>>();
         Mock<AppDbContext> mockDb = new Mock<AppDbContext>(new DbContextOptionsBuilder<AppDbContext>().Options);
         Mock<DbSet<Product>> mockProductSet = new Mock<DbSet<Product>>();
         Mock<DbSet<Category>> mockCategorySet = new Mock<DbSet<Category>>();
@@ -93,10 +93,10 @@ namespace api.tests
             var mockSetObject = MockDbSetSetup(mockProductSet, fakeProductData);
             mockDb.Setup(db => db.Products).Returns(mockSetObject);
 
-            var controller = new FeaturedProductsController(mockDb.Object, mockLogger.Object);
+            var controller = new ProductsController(mockDb.Object, mockLogger.Object);
 
             //Act
-            var result = controller.Get();
+            var result = controller.Featured();
             
             //Assert
             Assert.NotEmpty(result);
@@ -110,7 +110,7 @@ namespace api.tests
             var mockSetObject = MockDbSetSetup(mockCategorySet, fakeCategoryData);
             mockDb.Setup(db => db.Categories).Returns(mockSetObject);
 
-            var controller = new FeaturedProductsController(mockDb.Object, mockLogger.Object);
+            var controller = new ProductsController(mockDb.Object, mockLogger.Object);
 
             //Act
             var result = controller.Categories();
@@ -129,7 +129,7 @@ namespace api.tests
             var mockCategorySetObject = MockDbSetSetup(mockCategorySet, fakeCategoryData);
             mockDb.Setup(db => db.Categories).Returns(mockCategorySetObject);
 
-            var controller = new FeaturedProductsController(mockDb.Object, mockLogger.Object);
+            var controller = new ProductsController(mockDb.Object, mockLogger.Object);
                         
             //Act
             var result = controller.Get("TestCat3");
@@ -137,6 +137,26 @@ namespace api.tests
             //Assert
             Assert.NotEmpty(result);
             Assert.Equal(fakeProductData[2].Name, result.Where(p => p.Name == "TestProd3").FirstOrDefault().Name);
+        }
+
+        [Fact]
+        public void GetWithNoParam_WhenCalled_ItReturnsAFullProductList()
+        {
+            //Arrange
+            var mockProductSetObject = MockDbSetSetup(mockProductSet, fakeProductData);
+            mockDb.Setup(db => db.Products).Returns(mockProductSetObject);
+
+            var mockCategorySetObject = MockDbSetSetup(mockCategorySet, fakeCategoryData);
+            mockDb.Setup(db => db.Categories).Returns(mockCategorySetObject);
+
+            var controller = new ProductsController(mockDb.Object, mockLogger.Object);
+        
+            //Act
+            var result = controller.Get();
+        
+            //Assert
+            Assert.NotEmpty(result);
+            Assert.Contains(fakeProductData[4], result);
         }
     }
 }
