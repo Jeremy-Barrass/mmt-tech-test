@@ -22,7 +22,7 @@ namespace console_app
 
             foreach (var result in resultList)
             {
-                Console.Write(result.Content.ToString() + "\n");
+                Console.Write(result.Content.ReadAsStringAsync().Result + "\n");
             }
         }
     }
