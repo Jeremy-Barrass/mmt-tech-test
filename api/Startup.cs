@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +27,11 @@ namespace api
                     Configuration["Db:ConnectionString"],
                     ServerVersion.FromString("8.0.23=mysql"),
                     mySqlOptions => {
-                        
+                        mySqlOptions.EnableRetryOnFailure(
+                            maxRetryCount: 5,
+                            maxRetryDelay: TimeSpan.FromSeconds(10),
+                            errorNumbersToAdd: null
+                        );
                     })
                     .EnableDetailedErrors()
             );
