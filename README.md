@@ -4,9 +4,9 @@ This is my submission to MMT Digital for their first stage interview.
 
 ## Setup
 
-* Ensure of you have the [dotnet SDK](https://dotnet.microsoft.com/download) installed for your system.
+* Ensure you have the [dotnet SDK](https://dotnet.microsoft.com/download) installed for your system.
 
-* Open you SQL DB manager and start a new query.  Copy and past the contents of **database/db_schema.sql** into this query and run it.
+* Open your SQL DB manager and start a new query.  Copy and past the contents of **database/db_schema.sql** into this query and run it.
 
 * Create (if desired) or grant an existing user the appropriate permissions to view the database and its schemas.
 
