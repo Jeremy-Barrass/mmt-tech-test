@@ -20,18 +20,18 @@ namespace api.Controllers
             _db = db;
         }
 
-        [HttpGet("Products/Featured")]
-        [Route("[controller]/[action]")]
+        [HttpGet("[action]")]
+        [Route("Featured")]
         public IEnumerable<Product> Featured() =>
             _db.Products.Where(p => p.Sku < 40000).ToList();
 
-        [HttpGet("Products/Categories")]
-        [Route("[controller]/[action]")]
+        [HttpGet("[action]")]
+        [Route("Categories")]
         public IEnumerable<string> Categories() => 
             _db.Categories.Select(c => c.Name).ToList();
 
-        [HttpGet("Products/{category?}")]
-        [Route("[controller]/{category?}")]
+        [HttpGet("{category?}")]
+        [Route("{category?}")]
         public IEnumerable<Product> Get(string category = null)
         {
             if (category is null) return _db.Products.ToList();
