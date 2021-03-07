@@ -87,7 +87,7 @@ namespace api.tests
         }
 
         [Fact]
-        public void Get_WhenCalled_ItReturnsAListOfFeaturedProducts()
+        public void Featured_WhenCalled_ItReturnsAListOfFeaturedProducts()
         {
             //Arrange
             var mockSetObject = MockDbSetSetup(mockProductSet, fakeProductData);
