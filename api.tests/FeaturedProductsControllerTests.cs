@@ -23,32 +23,32 @@ namespace api.tests
             {
                 Name = "TestProd1",
                 Sku = 10000,
-                Category = "TestCat1"
+                Category = 1
             },
             new Product
             {
                 Name = "TestProd2",
                 Sku = 20000,
-                Category = "TestCat2"
+                Category = 2
             },
             new Product
             {
                 Name = "TestProd3",
                 Sku = 30000,
-                Category = "TestCat3"
+                Category = 3
             },
             new Product
             {
                 Name = "TestProd4",
                 Sku = 40000,
-                Category = "TestCat4"
+                Category = 4
             },
             new Product
             {
                 Name = "TestProd5",
                 Sku = 50000,
-                Category = "TestCat5"
-            },
+                Category = 5
+            }
         };
         List<Category> fakeCategoryData = new List<Category>{
             new Category

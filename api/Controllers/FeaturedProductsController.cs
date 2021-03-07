@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using api.DbConnection;
 using api.Models;
+using api.Enums;
 
 namespace api.Controllers
 {
@@ -31,7 +32,10 @@ namespace api.Controllers
 
         [HttpGet]
         [Route("[controller]/{category}")]
-        public IEnumerable<Product> Get(string category) => 
-            _db.Products.Where(p => p.Category == category);
+        public IEnumerable<Product> Get(string category)
+        {
+            var catValue = Enum.Parse<ProdCategory>(category);
+            return _db.Products.Where(p => p.Category == catValue);
+        }
     }
 }
