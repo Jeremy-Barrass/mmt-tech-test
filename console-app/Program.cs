@@ -12,12 +12,14 @@ namespace console_app
         {
             var result1 = client.GetAsync("https://localhost:5001/Products").Result;
             var result2 = client.GetAsync("https://localhost:5001/Products/Featured").Result;
-            var result3 = client.GetAsync("https://localhost:5001/Products/Electronics").Result;
+            var result3 = client.GetAsync("https://localhost:5001/Products/Categories").Result;
+            var result4 = client.GetAsync("https://localhost:5001/Products/Electronics").Result;
 
             var resultList = new List<HttpResponseMessage>{
                 result1,
                 result2,
-                result3
+                result3,
+                result4
             };
 
             foreach (var result in resultList)
